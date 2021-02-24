@@ -20,12 +20,12 @@ public class DataGenerator {
         }
 
         public static UserInfo generateValidUser() {
-            Faker faker = new Faker(new Locale("eng"));
+            Faker faker = new Faker(new Locale("en"));
             return new UserInfo(faker.name().fullName(), faker.internet().password(), "active");
         }
 
         public static UserInfo generateBlockedUser() {
-            Faker faker = new Faker(new Locale("eng"));
+            Faker faker = new Faker(new Locale("en"));
             return new UserInfo(faker.name().fullName(), faker.internet().password(), "blocked");
         }
     }
