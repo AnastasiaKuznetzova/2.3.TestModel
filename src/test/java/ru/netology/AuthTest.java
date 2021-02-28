@@ -21,40 +21,36 @@ public class AuthTest {
 
     @Test
     void shouldSendFormValid() {
-        UserInfo validUserInfo = DataGenerator.Registration.generateValidUser();
-        DataGenerator.SendQuery.setUpAll(validUserInfo);
-        $("[data-test-id=login] input").setValue(validUserInfo.getLogin());
-        $("[data-test-id=password] input").setValue(validUserInfo.getPassword());
+      var validUser=generateUser("active");
+        $("[data-test-id=login] input").setValue(validUser.getLogin());
+        $("[data-test-id=password] input").setValue(validUser.getPassword());
         $("button[data-test-id=action-login]").click();
         $(withText("Личный кабинет")).shouldBe(visible);
     }
 
     @Test
     void shouldSendFormBlockedUser() {
-        UserInfo blockedUserInfo = DataGenerator.Registration.generateBlockedUser();
-        DataGenerator.SendQuery.setUpAll(blockedUserInfo);
-        $("[data-test-id=login] input").setValue(blockedUserInfo.getLogin());
-        $("[data-test-id=password] input").setValue(blockedUserInfo.getPassword());
+        var blockedUser=generateUser("blocked");
+        $("[data-test-id=login] input").setValue(blockedUser.getLogin());
+        $("[data-test-id=password] input").setValue(blockedUser.getPassword());
         $("button[data-test-id=action-login]").click();
         $(withText("Пользователь заблокирован")).shouldBe(visible);
     }
 
     @Test
     void  shouldGetErrorIfWrongLogin() {
-        UserInfo validUserInfo = DataGenerator.Registration.generateValidUser();
-        DataGenerator.SendQuery.setUpAll(validUserInfo);
-        $("[data-test-id=login] input").setValue("125869574");
-        $("[data-test-id=password] input").setValue(validUserInfo.getPassword());
+        var wrongLoginUser=generateWrongLoginUser("active");
+        $("[data-test-id=login] input").setValue(wrongLoginUser.getLogin());
+        $("[data-test-id=password] input").setValue(wrongLoginUser.getPassword());
         $("button[data-test-id=action-login]").click();
         $(withText("Неверно указан логин или пароль")).shouldBe(visible);
 
     }
     @Test
     void shouldGetErrorIfWrongPassword() {
-        UserInfo validUserInfo = DataGenerator.Registration.generateValidUser();
-        DataGenerator.SendQuery.setUpAll(validUserInfo);
-        $("[data-test-id=login] input").setValue(validUserInfo.getLogin());
-        $("[data-test-id=password] input").setValue("asdfvcxz");
+        var wrongPasswordUser=generateWrongPasswordUser("active");
+        $("[data-test-id=login] input").setValue(wrongPasswordUser.getLogin());
+        $("[data-test-id=password] input").setValue(wrongPasswordUser.getPassword());
         $("button[data-test-id=action-login]").click();
         $(withText("Неверно указан логин или пароль")).shouldBe(visible);
 
